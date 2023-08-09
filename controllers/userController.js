@@ -1,7 +1,7 @@
 import { User } from "../models/user.js"
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
-import { sendCookie } from "../features/sendCookie.js";
+import { sendCookie } from "../utils/sendCookie.js";
 
 // =============== Register User Controller =================
 export const register = async (req, res) => {
