@@ -4,14 +4,17 @@ import { Task } from "../models/task.js";
 export const addTask = async (req, res) => {
   try {
     const { text } = req.body;
+
     await Task.create({
       text,
       user: req.user,
     });
+
     res.status(201).json({
       success: true,
       message: "Task Added",
     });
+    
   } catch (error) {
     res.status(500).json({
       success: false,
@@ -43,43 +46,38 @@ export const deleteTask = async (req, res) => {
     const { id } = req.params;
     const task = await Task.findById(id);
     if (!task)
-      return res.status(404).json({
-        success: false,
-        message: "Task not found",
-      });
+      return res
+        .status(404)
+        .json({ success: false, message: "Task not found" });
+
     await task.deleteOne();
+
     res.status(200).json({
       success: true,
-      message: "Task Deleted Successfully",
       task,
+      message: "Task Deleted Successfully",
     });
   } catch (error) {
     res.status(500).json({
       success: false,
       error,
     });
-  }
+  };
 };
 
 // ============== Complete task Controller =============
-export const completeTask = async (req, res) => {
+export const updateTask = async (req, res) => {
   try {
-    const { id } = req.params;
-    const task = await Task.findById(id);
-
-    if (!task)
-      return res.status(404).json({
-        success: false,
-        message: "Task not found",
-      });
+    const task = await Task.findById(req.params.id);
 
     task.complete = !task.complete;
+
     await task.save();
 
     res.status(200).json({
       success: true,
-      message: "Task Completed",
       task,
+      message: "Task completed",
     });
   } catch (error) {
     res.status(500).json({

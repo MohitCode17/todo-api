@@ -1,9 +1,9 @@
 import express from "express";
 import {
   addTask,
-  completeTask,
   deleteTask,
   getTasks,
+  updateTask,
 } from "../controllers/taskController.js";
 import { isAuthenticated } from "../middlewares/auth.js"
 
@@ -16,9 +16,9 @@ router.post("/addTask", isAuthenticated, addTask);
 router.get("/getTasks", isAuthenticated, getTasks);
 
 // Add Task Route
-router.get("/complete/:id", isAuthenticated, completeTask);
+router.get("/updateTask/:id", isAuthenticated, updateTask);
 
 // Add Task Route
-router.delete("/delete/:id", isAuthenticated, deleteTask);
+router.delete("/deleteTask/:id", isAuthenticated, deleteTask);
 
 export default router;
